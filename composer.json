@@ -1,5 +1,5 @@
 {
-    "name": "arthaeus/paylease-rpn",
+    "name": "arthaeus/paylease-algorithms",
     "description": "Reverse polish notation class that I borrowed from https://github.com/rin-nas/php-math-rpn",
     "license": "MIT",
     "version": "1.0.1",
