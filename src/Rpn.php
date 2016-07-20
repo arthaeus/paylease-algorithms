@@ -1,6 +1,9 @@
 <?php
 
 namespace RPN;
+
+use RPN\Rpnexception as Rpnexception;
+
 /**
  * Reverse Polish Notation Calculator
  *
@@ -27,7 +30,7 @@ class Rpn
 	 *
 	 * @param   string  $expression  Выражение для вычисления
 	 * @return  int|string
-	 * @throw   Math_RPN_Exception
+	 * @throw   Rpnexception
 	 */
 	function calculate($expression)
 	{
@@ -41,7 +44,7 @@ class Rpn
 							| pow
 						)
 						~sxuSX', $expression, $m, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
-		if (empty($m)) throw new Math_RPN_Exception('Expression is empty', $expression);
+		if (empty($m)) throw new Rpnexception('Expression is empty', $expression);
 
 		$stack = array();
 		foreach ($m as $i => $a)
@@ -58,7 +61,7 @@ class Rpn
 			list ($statement, $offset) = $a[0];
 			$c = count($stack);
 
-			if ($c < 1) throw new Math_RPN_Exception('Failed apply a statement "' . $statement . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
+			if ($c < 1) throw new Rpnexception('Failed apply a statement "' . $statement . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
 
 			$index = $c - 1;
 			if ($statement === '√' || $statement === 'sqrt')
@@ -67,7 +70,7 @@ class Rpn
 				continue;
 			}
 
-			if ($c < 2) throw new Math_RPN_Exception('Failed apply two argument statement "' . $statement . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
+			if ($c < 2) throw new Rpnexception('Failed apply two argument statement "' . $statement . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
 
 			$index = $c - 2;
 			$operand = array_pop($stack);
@@ -76,55 +79,11 @@ class Rpn
 			elseif ($statement === '+')							$stack[$index] += $operand;
 			elseif ($statement === '-' || $statement === '−')	$stack[$index] -= $operand;
 			elseif ($statement === '^' || $statement === 'pow')	$stack[$index] = pow($stack[$index], $operand);
-			else throw new Math_RPN_Exception('Undefined handler for statement "' . $statement . '"', $expression, $offset);
+			else throw new Rpnexception('Undefined handler for statement "' . $statement . '"', $expression, $offset);
 		}
 		$result = array_pop($stack);
 		$c = count($stack);
-		if ($c > 0) throw new Math_RPN_Exception('Failed apply an operand "' . $operand . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
+		if ($c > 0) throw new Rpnexception('Failed apply an operand "' . $operand . '" at offset ' . $offset . ', stack count = ' . $c, $expression, $offset);
 		return $result;
 	}
-}
-
-class Math_RPN_Exception extends Exception
-{
-	/**
-	 * @var string|null
-	 */
-	protected $expression = null;
-
-	/**
-	 * @var int|null
-	 */
-	protected $offset = null;
-
-	/**
-	 *
-	 * @param  string       $message
-	 * @param  string|null  $expression
-	 * @param  int|null     $offset
-	 */
-	public function __construct($message, $expression = null, $offset = null)
-	{
-		parent::__construct($message);
-		$this->expression  = $expression;
-		$this->offset      = $offset;
-	}
-
-	/**
-	 * @return string|null
-	 */
-	public final function getExpression()
-	{
-		return $this->expression;
-	}
-
-	/**
-	 * @return int|null
-	 */
-	public final function getOffset()
-	{
-		return $this->offset;
-	}
-
-
 }
