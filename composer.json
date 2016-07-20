@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "RPN\\": "src/"
+            "Algorithm\\": "src/"
         }
     },
     "autoload-dev": {
