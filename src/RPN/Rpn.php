@@ -2,7 +2,7 @@
 
 namespace Algorithm;
 
-use Algorithm\RPN\Rpnexception as Rpnexception;
+use Algorithm\Rpnexception as Rpnexception;
 use Algorithm\IAlgorithm as IAlgorithm;
 
 /**
