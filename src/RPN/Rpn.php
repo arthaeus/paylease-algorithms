@@ -1,8 +1,9 @@
 <?php
 
-namespace RPN;
+namespace Algorithm\RPN;
 
-use RPN\Rpnexception as Rpnexception;
+use Algorithm\RPN\Rpnexception as Rpnexception;
+use Algorithm\IAlgorithm as IAlgorithm;
 
 /**
  * Reverse Polish Notation Calculator
@@ -16,7 +17,7 @@ use RPN\Rpnexception as Rpnexception;
  * @charset  UTF-8
  * @version  1.0.0
 */
-class Rpn
+class Rpn implements IAlgorithm
 {
 
 	function __construnct()
@@ -32,8 +33,9 @@ class Rpn
 	 * @return  int|string
 	 * @throw   Rpnexception
 	 */
-	function calculate($expression)
-	{
+	function calculate( \stdClass $expressionClass )
+    {
+        $expression = trim($expressionClass->expression);
 		preg_match_all('~
 						(?>	#operands
 							(-? \d+ (?>\.\d*)? (?>[eE][+\-]?+\d+)?)  #1 digit
