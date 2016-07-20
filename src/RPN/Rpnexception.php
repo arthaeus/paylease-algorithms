@@ -1,6 +1,6 @@
 <?php
 
-namespace Algorithm;
+namespace Algorithm\RPN;
 
 class Rpnexception extends Exception
 {

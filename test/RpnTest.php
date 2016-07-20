@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__.'/../vendor/autoload.php';
-use Algorithm\Rpn as Rpn;
+use Algorithm\RPN\Rpn as Rpn;
 
 class RpnTest extends PHPUnit_Framework_TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Algorithm;
+namespace Algorithm\RPN;
 
 use Algorithm\Rpnexception as Rpnexception;
 use Algorithm\IAlgorithm as IAlgorithm;
