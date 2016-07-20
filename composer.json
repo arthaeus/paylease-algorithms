@@ -18,6 +18,9 @@
     },
     "autoload-dev": {
       "classmap": ["src/"]
+    },
+    "autoload-dev": {
+      "psr-4": {"": "src/"}
     }
 
 }
